@@ -1,0 +1,134 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ninja Gold</title>
+    <link rel="stylesheet" href="{% static 'bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+</head>
+<body>
+
+  <div class="container">
+    <h3 class="text-center mt-3">Ninja Gold</h3>
+ 
+
+    <div class="row">
+      <div class="col-4 col-md-6">
+        <div class="mb-3">
+          <label for="your_gold_input" class="form-label">Your Gold</label>
+          <input type="number" class="form-control" id="your_gold_input" name="your_gold" disabled value="{{request.session.gold}}">
+          <div id="your_gold_help_text" class="form-text">Your Score Of Collected Gold</div>
+        </div>
+      </div>
+    </div>
+    <div class="row text-center">
+      <div class="col-lg-3 col-md-6">
+        <div class="card text-center">
+          <!-- action Call Url -->
+          <form action="{% url 'url_process_money' %}" method="POST">
+            {% comment %}
+            <!-- <form action="{% url 'name_of_url' %}" method="POST"> -->
+            {% endcomment %}
+          <!-- <form action="/process_money" method="POST"> -->
+            {% csrf_token %}
+            <!-- Start Header -->
+            <div class="card-header">
+              <h5 class="card-title">Farm</h5>
+            </div>
+            <!-- Start Body -->
+            <div class="card-body">
+              <p class="card-text">(earns 10 - 20 gold)</p>
+              <input name="location" value="farm" type="text" style="display: none;">
+            </div>
+            <!-- Start Footer -->
+            <div class="card-footer">
+              <button class="btn btn-outline-warning" type="submit">Find Gold</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="card text-center">
+          <form action="{% url 'url_process_money' %}" method="POST">
+            {% csrf_token %}
+            <!-- Start Header -->
+            <div class="card-header">
+              <h5 class="card-title">Cave</h5>
+            </div>
+            <!-- Start Body -->
+            <div class="card-body">
+              <p class="card-text">(earns 10 - 20 gold)</p>
+              <input name="location" value="cave" type="text" style="display: none;">
+            </div>
+            <!-- Start Footer -->
+            <div class="card-footer">
+              <button class="btn btn-outline-warning" type="submit">Find Gold</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="card text-center">
+          <form action="{% url 'url_process_money' %}" method="POST">
+            {% csrf_token %}
+            <!-- Start Header -->
+            <div class="card-header">
+              <h5 class="card-title">House</h5>
+            </div>
+            <!-- Start Body -->
+            <div class="card-body">
+              <input name="location" value="house" type="text" style="display: none;">
+              <p class="card-text">(earns 10 - 20 gold)</p>
+            </div>
+            <!-- Start Footer -->
+            <div class="card-footer">
+              <button class="btn btn-outline-warning" type="submit">Find Gold</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="card text-center">
+          <form action="{% url 'url_process_money' %}" method="POST">
+            {% csrf_token %}
+            <!-- Start Header -->
+            <div class="card-header">
+              <h5 class="card-title">Quest</h5>
+            </div>
+            <!-- Start Body -->
+            <div class="card-body">
+              <input name="location" value="quest" type="text" style="display: none;">
+              <p class="card-text">(earns/takes 0 - 50 gold)</p>
+            </div>
+            <!-- Start Footer -->
+            <div class="card-footer">
+              <button class="btn btn-outline-warning" type="submit">Find Gold</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <h3 class="text-left">Activties</h3>
+      <ul class="list-group scrollable-list-group">
+        {% for msg in request.session.msgs %}
+
+          {% if msg.is_plus == False %}
+          <li class="list-group-item text-danger">{{msg.text}}</li>
+          {% else %}
+          <li class="list-group-item text-success">{{msg.text}}</li>
+            
+          {% endif %}
+        {% endfor %}
+        
+      </ul>
+    </div>
+  </div>
+  
+
+    <script src="{% static 'bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>
